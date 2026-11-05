@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "workflow-analytics",
+    "slug": "workflow-analytics",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/imagenes/icon.png",
+    "scheme": "workflowanalytics",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/expo.icon"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/imagenes/android-icon-foreground.png",
+        "backgroundImage": "./assets/imagenes/android-icon-background.png",
+        "monochromeImage": "./assets/imagenes/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/imagenes/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#208AEF",
+          "image": "./assets/imagenes/splash-icon.png",
+          "imageWidth": 76
+        }
+      ],
+      "@react-native-community/datetimepicker"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
