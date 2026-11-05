@@ -37,14 +37,11 @@
   },
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./herramientas/reiniciar-proyecto.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint",
     "iniciar": "expo start",
     "servidor": "node --env-file=server/.env server/indice.mjs",
-    "pruebas": "node --test server/pruebas-servidor.test.mjs server/pruebas-estadisticas.test.mjs server/pruebas-fechas.test.mjs",
     "tipos": "tsc --noEmit",
     "exportar-android": "expo export --platform android"
   },
