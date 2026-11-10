@@ -7,7 +7,7 @@ import { Boton, s } from './pantalla';
 
 // Mostramos los dos campos que se pueden tocar para elegir fecha y hora.
 
-export function SelectoresFechaHora({ date, time, onDateChange, onTimeChange }: PropiedadesFechaHora) {
+export function SelectoresFechaHora({ date, time, onDateChange, onTimeChange, entreFechaYHora }: PropiedadesFechaHora) {
   const [mode, setMode] = useState<'date' | 'time' | null>(null);
   const [draft, setDraft] = useState(new Date());
   const [error, setError] = useState('');
@@ -52,6 +52,7 @@ export function SelectoresFechaHora({ date, time, onDateChange, onTimeChange }: 
         <Text style={s.label}>{dateLabel}</Text><Text style={s.success}>▾</Text>
       </Pressable>
     </View>
+    {entreFechaYHora}
     <View style={{ gap: 8 }}>
       <Text style={s.label}>Hora · formato 24 horas</Text>
       <Pressable accessibilityRole="button" accessibilityLabel={'Elegir hora: ' + (time || 'sin elegir')} onPress={() => open('time')} style={[s.input, { flexDirection: 'row', justifyContent: 'space-between' }]}>

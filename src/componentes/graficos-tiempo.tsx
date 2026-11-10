@@ -29,7 +29,7 @@ function Torta({ rows }: { rows: ReturnType<typeof resumirTiempo> }) {
       const start = angle; angle += row.minutes / total * Math.PI * 2;
       // Este recorrido SVG dibuja una porción desde el centro hasta el borde.
       const d = `M 110 110 L ${110 + 96 * Math.cos(start)} ${110 + 96 * Math.sin(start)} A 96 96 0 ${angle - start > Math.PI ? 1 : 0} 1 ${110 + 96 * Math.cos(angle)} ${110 + 96 * Math.sin(angle)} Z`;
-      return <Path key={row.id} d={d} fill={row.color} stroke="#1A2042" strokeWidth={2} />;
+      return <Path key={row.id} d={d} fill={row.color} stroke="#2A1C42" strokeWidth={2} />;
     })}
   </Svg>;
 }
@@ -49,7 +49,7 @@ export function GraficosTiempo() {
   return <View style={{ gap: 22 }}>
     <Text style={s.title}>Tu tiempo</Text>
     <Text style={s.muted}>Tiempo agendado por categoría, no tiempo realizado. Solo incluye actividades registradas desde esta versión de WorkFlow.</Text>
-    <Text style={s.muted}>{sesion?.demo ? 'Datos de prueba · Se borran al salir del modo demo.' : sesion?.token ? 'Historial de esta cuenta guardado en este teléfono.' : 'Historial local compartido por quienes usan este teléfono sin Google.'}</Text>
+    <Text style={s.muted}>{sesion?.ingreso === 'email' ? `Historial local de ${sesion.email}.` : 'Historial de esta cuenta guardado en este teléfono.'}</Text>
     {!!errorHistorial && <Text accessibilityRole="alert" style={s.error}>{errorHistorial}</Text>}
     {!historialListo ? <Text style={s.muted}>Cargando historial…</Text> : <>
       <View style={s.card}>
@@ -71,7 +71,7 @@ export function GraficosTiempo() {
         <Text style={s.success}>{formatearMinutos(dayTotal)} agendados</Text>
         {dayTotal > 0 ? daily.map(row => <View key={row.id} accessible accessibilityLabel={row.label + ': ' + formatearMinutos(row.minutes)} style={{ gap: 6 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}><Text style={s.muted}>{row.label}</Text><Text style={s.label}>{formatearMinutos(row.minutes)}</Text></View>
-          <View style={{ backgroundColor: '#30375F', height: 16, borderRadius: 8, overflow: 'hidden' }}><View style={{ height: 16, width: `${row.minutes / max * 100}%`, backgroundColor: row.color, borderRadius: 8 }} /></View>
+          <View style={{ backgroundColor: '#4A3568', height: 16, borderRadius: 8, overflow: 'hidden' }}><View style={{ height: 16, width: `${row.minutes / max * 100}%`, backgroundColor: row.color, borderRadius: 8 }} /></View>
         </View>) : <Text style={s.muted}>No hay actividades registradas para este día. Usá las flechas para ver otra fecha.</Text>}
       </View>
       <Text style={s.muted}>Los horarios superpuestos se suman. Los eventos que cruzan medianoche se reparten entre días. No se importan cambios hechos fuera de WorkFlow.</Text>

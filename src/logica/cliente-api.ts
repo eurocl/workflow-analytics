@@ -2,7 +2,7 @@
 // Esta URL es pública; las credenciales de Google están solamente en el servidor.
 const base = process.env.EXPO_PUBLIC_API_URL?.replace(/\/$/, '');
 export async function api(path: string, body?: unknown, token?: string) {
-  if (!base) throw new Error('Falta configurar EXPO_PUBLIC_API_URL. Podés usar el modo demo.');
+  if (!base) throw new Error('Falta configurar EXPO_PUBLIC_API_URL con la dirección del servidor.');
   // Si hay datos para enviar usamos POST; si no, usamos GET.
   const response = await fetch(`${base}${path}`, {
     method: body === undefined ? 'GET' : 'POST',

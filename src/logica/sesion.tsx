@@ -2,12 +2,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Actividad, agregarActividad, leerHistorial } from './estadisticas';
-type Sesion = { token: string; email: string; name: string; demo: boolean; local?: boolean };
+type Sesion = { token: string; email: string; name: string; ingreso?: 'email' };
 let writes = Promise.resolve();
 const Context = createContext<{
   sesion: Sesion | null; cambiarSesion: (value: Sesion | null) => void;
   duracion: number; cambiarDuracion: (value: number) => void;
-  ultimaActividad: Actividad | null; registrarActividad: (value: Actividad | null) => void;
+  ultimaActividad: Actividad | null; registrarActividad: (value: Actividad) => void;
   actividades: Actividad[]; historialListo: boolean; errorHistorial: string;
 }>({ sesion: null, cambiarSesion: () => {}, duracion: 60, cambiarDuracion: () => {}, ultimaActividad: null, registrarActividad: () => {}, actividades: [], historialListo: false, errorHistorial: '' });
 
@@ -16,17 +16,17 @@ const Context = createContext<{
 export function ProveedorSesion({ children }: React.PropsWithChildren) {
   const [sesion, cambiarSesion] = useState<Sesion | null>(null);
   const [duracion, cambiarDuracion] = useState(60);
-  // Separamos Google por email. Sin Google, el historial es común a este teléfono.
-  const key = !sesion ? '' : sesion.demo ? 'demo' : sesion.token
+  // Cada email tiene su historial local, separado del acceso verificado con Google.
+  const key = !sesion ? '' : sesion.token
     ? 'workflow:history:v1:google:' + encodeURIComponent(sesion.email.toLowerCase())
-    : 'workflow:history:v1:device';
+    : 'workflow:history:v1:email:' + encodeURIComponent(sesion.email.toLowerCase());
   const [history, setHistory] = useState<{ key: string; items: Actividad[]; ready: boolean; writable: boolean }>({ key: '', items: [], ready: false, writable: false });
   const [errorHistorial, setHistoryError] = useState('');
   // Cuando cambia la cuenta, leemos su historial sin mezclarlo con el anterior.
   useEffect(() => {
     let active = true;
     setHistoryError('');
-    if (!key || key === 'demo') {
+    if (!key) {
       setHistory({ key, items: [], ready: true, writable: false });
       return;
     }
@@ -52,8 +52,7 @@ export function ProveedorSesion({ children }: React.PropsWithChildren) {
   // Mientras carga otra cuenta, no mostramos registros de la sesión anterior.
   const historialListo = history.key === key && history.ready;
   const actividades = historialListo ? history.items : [];
-  const registrarActividad = (value: Actividad | null) => {
-    if (!value) return; // Cerrar sesión no borra el historial guardado.
+  const registrarActividad = (value: Actividad) => {
     setHistory(previous => previous.key === key && previous.ready
       ? { ...previous, items: agregarActividad(previous.items, value) } : previous);
   };

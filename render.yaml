@@ -1,0 +1,17 @@
+# Publicamos solo la API; Expo sigue ejecutándose en la computadora.
+services:
+  - type: web
+    name: workflow-analytics-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: node --check indice.mjs
+    startCommand: node indice.mjs
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false

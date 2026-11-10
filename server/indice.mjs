@@ -17,15 +17,15 @@ export function validarEvento(body, now = Date.now()) {
   if (typeof start !== 'string' || typeof end !== 'string' || !iso.test(start) || !iso.test(end))
     throw new Error('Fecha u hora inválida.');
   const a = Date.parse(start), b = Date.parse(end);
-  if (!Number.isFinite(a) || !Number.isFinite(b) || new Date(a).toISOString() !== start || new Date(b).toISOString() !== end || a <= now || ![30, 60, 90, 120].includes((b - a) / 60000))
-    throw new Error('Usá una fecha futura y una duración de 30, 60, 90 o 120 minutos.');
+  if (!Number.isFinite(a) || !Number.isFinite(b) || new Date(a).toISOString() !== start || new Date(b).toISOString() !== end || a <= now || ![10, 30, 60, 90, 120].includes((b - a) / 60000))
+    throw new Error('Usá una fecha futura y una duración de 10, 30, 60, 90 o 120 minutos.');
   return { summary: summary.trim(), start, end };
 }
-// Armamos el servidor; en las pruebas podemos reemplazar las llamadas a Google.
+// Armamos el servidor que recibe los pedidos de la app.
 export function crearServidor(env = process.env, request = fetch) {
   // Estos mapas viven en memoria: al reiniciar el servidor se pierden las sesiones.
   const flows = new Map(), polls = new Map(), sessions = new Map(), limits = new Map();
-  const publicUrl = (env.PUBLIC_URL || '').replace(/\/$/, '');
+  const publicUrl = (env.PUBLIC_URL || env.RENDER_EXTERNAL_URL || '').replace(/\/$/, '');
   const redirect = publicUrl + '/auth/callback';
   const configured = env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && /^https:\/\//.test(publicUrl);
   // Las llamadas a Google tienen un tiempo de espera máximo de 15 segundos.
@@ -174,7 +174,7 @@ export function crearServidor(env = process.env, request = fetch) {
     }
   });
 }
-// Arrancamos el puerto solo al ejecutar este archivo, no al importarlo desde las pruebas.
+// Arrancamos el puerto solo al ejecutar este archivo, no al importarlo como módulo.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   crearServidor().listen(Number(process.env.PORT || 3001), '0.0.0.0', () => console.log('WorkFlow API en puerto ' + (process.env.PORT || 3001)));
 }

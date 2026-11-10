@@ -1,16 +1,16 @@
 // Acá hacemos las cuentas de los gráficos. Sumamos tiempo agendado, no tiempo realmente trabajado.
 export const categorias = [
-  { id: 'trabajo', label: 'Trabajo', color: '#8395FF' },
-  { id: 'estudio', label: 'Estudio', color: '#61E6D2' },
-  { id: 'salud', label: 'Salud', color: '#FFAB91' },
-  { id: 'personal', label: 'Personal', color: '#E4ACFF' },
-  { id: 'ocio', label: 'Ocio', color: '#FFD778' },
-  { id: 'otros', label: 'Otros', color: '#AAB6CC' },
+  { id: 'trabajo', label: 'Trabajo', color: '#B89AFA' },
+  { id: 'estudio', label: 'Estudio', color: '#70E0AD' },
+  { id: 'salud', label: 'Salud', color: '#A5D99B' },
+  { id: 'personal', label: 'Personal', color: '#DEC0F6' },
+  { id: 'ocio', label: 'Ocio', color: '#BCE8CF' },
+  { id: 'otros', label: 'Otros', color: '#AFA0D5' },
 ] as const;
 export type Categoria = typeof categorias[number]['id'];
 export type Actividad = {
   summary: string; start: string; end: string; category: Categoria;
-  destination: 'device' | 'google' | 'demo'; htmlLink?: string;
+  destination: 'device' | 'google'; htmlLink?: string;
 };
 // Esta combinación nos permite reconocer el mismo evento si se vuelve a enviar.
 export function claveActividad(a: Actividad) {
@@ -33,7 +33,7 @@ function esActividad(a: any): a is Actividad {
     typeof a.end === 'string' && Number.isFinite(Date.parse(a.start)) &&
     Number.isFinite(Date.parse(a.end)) && Date.parse(a.end) > Date.parse(a.start) &&
     categorias.some(c => c.id === a.category) &&
-    ['device', 'google', 'demo'].includes(a.destination) &&
+    ['device', 'google'].includes(a.destination) &&
     (a.htmlLink === undefined || typeof a.htmlLink === 'string');
 }
 // Calculamos dónde empieza y termina el día o mes en la hora del teléfono.

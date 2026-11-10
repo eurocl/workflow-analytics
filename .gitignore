@@ -1,6 +1,6 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# dependencies
+# dependencias
 node_modules/
 .tools/
 
@@ -46,12 +46,12 @@ example
 /ios
 /android
 
-# Credenciales del servidor: quedan solamente en tu PC.
+# Credenciales del servidor: quedan solamente en la pc
 servidor/.env
 servidor/google-oauth.local.json
 
 ejemplo/
 
-# Archivos temporales de las guías y exportaciones locales.
+# Archivos temporales de las guías y exportaciones locales
 /tmp/
-/output/
+

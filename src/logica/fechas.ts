@@ -1,5 +1,6 @@
 // Acá pasamos la fecha y la hora del selector a texto, sin cambiar el día por la zona horaria.
 export type PropiedadesFechaHora = {
+  entreFechaYHora?: import('react').ReactNode;
   date: string; time: string;
   onDateChange: (value: string) => void;
   onTimeChange: (value: string) => void;
