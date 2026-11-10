@@ -33,7 +33,7 @@ export function SelectoresFechaHora({ date, time, onDateChange, onTimeChange, en
           positiveButton: { label: 'Elegir' }, negativeButton: { label: 'Cancelar' },
           onChange: (event, selected) => {
             opening.current = false;
-            // Cancelar no toca la selección anterior.
+            // Cancelar no toca la seleccion anterior.
             if (event.type === 'set' && selected) commit(kind, selected);
           },
           onError: () => { opening.current = false; setError('No se pudo abrir el selector. Intentá nuevamente.'); },
@@ -43,7 +43,7 @@ export function SelectoresFechaHora({ date, time, onDateChange, onTimeChange, en
       }
     } else { setDraft(value); setMode(kind); }
   }
-  // Lo mostramos como día/mes/año, aunque por dentro conservamos año-mes-día.
+  // Lo mostramos como día/mes/año, aunque por dentro conservamos año-mes-dia.
   const dateLabel = date ? date.split('-').reverse().join('/') : 'Elegir fecha';
   return <View style={{ gap: 18 }}>
     <View style={{ gap: 8 }}>
