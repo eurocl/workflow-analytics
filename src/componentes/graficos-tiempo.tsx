@@ -1,4 +1,4 @@
-// Acá dibujamos la torta mensual y las barras del día, usando el historial de tu sesión.
+// Acá dibujamos la torta mensual y las barras del día, usando el historial de la sesión.
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
@@ -6,7 +6,7 @@ import { resumirTiempo, formatearMinutos } from '@/logica/estadisticas';
 import { usarSesion } from '@/logica/sesion';
 import { s } from './pantalla';
 
-// Estas flechas te llevan al período anterior o al siguiente.
+// Estas flechas nos llevan al período anterior o al siguiente
 
 function NavegacionPeriodo({ label, previous, next, reset }: { label: string; previous: () => void; next: () => void; reset: () => void }) {
   return <View style={{ gap: 10 }}>
@@ -18,7 +18,7 @@ function NavegacionPeriodo({ label, previous, next, reset }: { label: string; pr
     <Pressable accessibilityRole="button" onPress={reset} style={{ padding: 8, alignSelf: 'center' }}><Text style={s.success}>Volver al período actual</Text></Pressable>
   </View>;
 }
-// Cada porción ocupa el porcentaje que representa esa categoría.
+// Cada porción ocupa el porcentaje que representa esa categoría
 function Torta({ rows }: { rows: ReturnType<typeof resumirTiempo> }) {
   const positive = rows.filter(row => row.minutes > 0);
   const total = positive.reduce((sum, row) => sum + row.minutes, 0);
@@ -27,13 +27,13 @@ function Torta({ rows }: { rows: ReturnType<typeof resumirTiempo> }) {
   return <Svg width="100%" height={220} viewBox="0 0 220 220" accessible accessibilityLabel={'Distribución mensual: ' + positive.map(r => r.label + ' ' + formatearMinutos(r.minutes)).join(', ')}>
     {positive.length === 1 ? <Circle cx={110} cy={110} r={96} fill={positive[0].color} /> : positive.map(row => {
       const start = angle; angle += row.minutes / total * Math.PI * 2;
-      // Este recorrido SVG dibuja una porción desde el centro hasta el borde.
+      // Este recorrido SVG dibuja una porción desde el centro hasta el borde
       const d = `M 110 110 L ${110 + 96 * Math.cos(start)} ${110 + 96 * Math.sin(start)} A 96 96 0 ${angle - start > Math.PI ? 1 : 0} 1 ${110 + 96 * Math.cos(angle)} ${110 + 96 * Math.sin(angle)} Z`;
       return <Path key={row.id} d={d} fill={row.color} stroke="#2A1C42" strokeWidth={2} />;
     })}
   </Svg>;
 }
-// Elegimos el día y el mes a consultar y preparamos los totales.
+// Elegimos el día y el mes a consultar y preparamos los totales
 export function GraficosTiempo() {
   const { actividades, historialListo, errorHistorial, sesion } = usarSesion();
   const [month, setMonth] = useState(() => new Date());

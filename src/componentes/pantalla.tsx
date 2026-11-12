@@ -1,4 +1,4 @@
-// Acá están los elementos que repetimos: pantalla con desplazamiento, botón, campo de texto y colores.
+// Acá esstán los elementos que repetimos: pantalla con desplazamiento, botón, campo de texto y colores.
 import React from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, Pressable, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,7 +10,7 @@ export function Pantalla({ children, clara = false }: React.PropsWithChildren<{ 
 export function Boton({ title, onPress, disabled = false, secondary = false, verde = false }: { title: string; onPress: () => void; disabled?: boolean; secondary?: boolean; verde?: boolean }) {
   return <Pressable accessibilityRole="button" disabled={disabled} onPress={onPress} style={({ pressed }) => [s.button, verde && { backgroundColor: '#176648' }, secondary && s.secondary, { opacity: disabled ? 0.45 : pressed ? 0.75 : 1 }]}><Text style={s.buttonText}>{title}</Text></Pressable>;
 }
-// Juntamos la etiqueta y el campo para no repetirlos en cada pantalla.
+// Juntamos la etiqueta y el campo para no repetirlos en cada pantalla
 export function Campo({ label, centrado = false, ocultarEtiqueta = false, ...props }: React.ComponentProps<typeof TextInput> & { label: string; centrado?: boolean; ocultarEtiqueta?: boolean }) {
   return <View style={{ gap: 8 }}>{!ocultarEtiqueta && <Text style={[s.label, centrado && { textAlign: 'center' }]}>{label}</Text>}<TextInput accessibilityLabel={label} placeholderTextColor="#AD9DBF" {...props} style={[s.input, centrado && { textAlign: 'center' }, props.style]} /></View>;
 }

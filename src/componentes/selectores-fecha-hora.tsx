@@ -1,4 +1,4 @@
-// Acá abrimos el calendario y el selector de hora del celular. Cancelar conserva lo que ya elegiste.
+// Acá abrimos el calendario y el selector de hora del celular. Cancelar conserva lo que ya elegimos
 import { useRef, useState } from 'react';
 import { Keyboard, Modal, Platform, Pressable, Text, View } from 'react-native';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
